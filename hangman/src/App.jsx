@@ -6,12 +6,21 @@ export default function App() {
   const[currentWord, setCurrentWord] = useState('React');
   const[guessedLetters, setGuessedLetters] = useState([]);
 
-
   //ALFABETO
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => {
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  function addGuessedLetter(letter) {
+    setGuessedLetters(prevGuessedLetters =>
+      prevGuessedLetters.includes(letter) ? prevGuessedLetters :
+      [...guessedLetters, letter]);
+  }
+
+  const keyboard = alphabet.split('').map(letter => {
+  const isGuessed = guessedLetters.includes(letter);
+    // const backGroundColor = isGuessed ? {backgroundColor: 'green'} : {backgroundColor: 'red'};
+
     return(
-      <button onClick={ () => setGuessedLetters(prevGuessedLetters => 
-      prevGuessedLetters.includes(letter) ? prevGuessedLetters : [...prevGuessedLetters, letter])}key={letter}>
+      <button onClick={() => addGuessedLetter(letter)} key={letter}>
         {letter}
       </button>
     )
@@ -56,7 +65,7 @@ export default function App() {
         {wordLetters}
       </section>
       <section className='keyboard'>
-        {alphabet}
+        {keyboard}
       </section>
       <button className='new-Game'>New Game</button>
 

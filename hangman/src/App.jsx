@@ -10,7 +10,10 @@ export default function App() {
   //ALFABETO
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => {
     return(
-      <button onClick={ () => setGuessedLetters(prevGuessedLetters => [...prevGuessedLetters, letter])}key={letter}>{letter}</button>
+      <button onClick={ () => setGuessedLetters(prevGuessedLetters => 
+      prevGuessedLetters.includes(letter) ? prevGuessedLetters : [...prevGuessedLetters, letter])}key={letter}>
+        {letter}
+      </button>
     )
   });
   console.log(guessedLetters);

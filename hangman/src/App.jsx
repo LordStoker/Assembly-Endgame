@@ -4,7 +4,7 @@ import {clsx} from 'clsx';
 
 export default function App() {
 
-  const[currentWord, setCurrentWord] = useState('REACT');
+  const[currentWord, setCurrentWord] = useState('react'.toUpperCase());
   const[guessedLetters, setGuessedLetters] = useState([]);
 
   //ALFABETO

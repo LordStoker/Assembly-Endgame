@@ -127,3 +127,11 @@ button.new-Game{
   cursor: pointer;
   margin-top: 25px;
 }
+
+section.keyboard > button.correct{
+  background-color: #10A95B;
+}
+
+section.keyboard > button.wrong{
+  background-color: #ee0000;
+}

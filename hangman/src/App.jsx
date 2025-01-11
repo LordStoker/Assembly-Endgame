@@ -1,31 +1,43 @@
-import { useState } from 'react'
+import {useState} from 'react'
 import {languages} from './languages.js'
+import {clsx} from 'clsx';
 
 export default function App() {
 
-  const[currentWord, setCurrentWord] = useState('React');
+  const[currentWord, setCurrentWord] = useState('REACT');
   const[guessedLetters, setGuessedLetters] = useState([]);
 
   //ALFABETO
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const keyboard = alphabet.split('').map(letter => {
+    //COMPROBAR SI LA LETRA SE HA INTENTADO Y SI ESTÁ O NO EN LA PALABRA A ADIVINAR
+    const isGuessed = guessedLetters.includes(letter);
+    const isCorrect = isGuessed && currentWord.includes(letter);
+    const isWrong = isGuessed && !currentWord.includes(letter);
+    const className = clsx({
+      correct: isCorrect,
+      wrong: isWrong
+      }
+    );
 
+
+      // const backGroundColor = isGuessed ? {backgroundColor: 'green'} : {backgroundColor: 'red'};
+    return(
+        <button 
+        // style={{backgroundColor: isCorrect ? 'green' : isWrong ? 'red' : '#FCBA29'}}
+        className={className}
+        onClick={() => addGuessedLetter(letter)} key={letter}>
+          {letter}
+        </button>
+      )
+  });
+//AÑADIR LETRAS SI NO SE REPITEN
   function addGuessedLetter(letter) {
     setGuessedLetters(prevGuessedLetters =>
       prevGuessedLetters.includes(letter) ? prevGuessedLetters :
-      [...guessedLetters, letter]);
+      [...prevGuessedLetters, letter]);
   }
 
-  const keyboard = alphabet.split('').map(letter => {
-  const isGuessed = guessedLetters.includes(letter);
-    // const backGroundColor = isGuessed ? {backgroundColor: 'green'} : {backgroundColor: 'red'};
-
-    return(
-      <button onClick={() => addGuessedLetter(letter)} key={letter}>
-        {letter}
-      </button>
-    )
-  });
-  console.log(guessedLetters);
   //PALABRA A ADIVINAR
   const wordLetters = currentWord.split('').map((letter, index) => {
     return(

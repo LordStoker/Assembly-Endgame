@@ -1,23 +1,20 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    font-family: "Hanken Grotesk", Arial, sans-serif;
-    background-color: #262626;
-    color: #D9D9D9;
-    padding: 20px;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
+  margin: 0;
+  font-family: "Hanken Grotesk", Arial, sans-serif;
+  background-color: #262626;
+  color: #D9D9D9;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
-header{
+header {
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 header > h1 {
@@ -26,67 +23,79 @@ header > h1 {
   color: #F9F4DA;
 }
 
-header > p{
+header > p {
   font-size: 0.875rem;
-  max-width: 350px;
-  color:#8E8E8E;
-  text-align: center;
-}
-section.game-Status >h2{
-  font-size: 1.25rem;
-  margin: 5px;
+  max-width: 450px;
+  color: #8E8E8E;
 }
 
-section.game-Status >p{
-  margin: 5px;
-}
-
-section.game-Status{
-  align-items: center;
+section.game-status {
   background-color: #10A95B;
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
+  align-items: center;
   color: #F9F4DA;
+  border-radius: 4px;
   margin-block: 30px;
-
 }
 
-/* section.youLose{
-  align-items: center;
+section.youLose{
   background-color: #ee0000;
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
+  align-items: center;
   color: #F9F4DA;
-} */
+  border-radius: 4px;
+  margin-block: 30px;
+}
 
+section.game-status > p {
+  margin: 5px;
+}
 
-section.language-chips{
+section.game-status > h2 {
+  font-size: 1.25rem;
+  margin: 5px
+}
+
+section.language-chips {
   display: flex;
-  flex-direction: row;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   gap: 5px;
   justify-content: center;
-  align-items: center;
   max-width: 450px;
   margin-bottom: 36px;
 }
 
-span.chip{
+span.chip {
   border-radius: 3px;
   padding: 4.5px;
+  position: relative;
 }
 
-section.word{
+/* Dimmed overlay with skull on "lost" languages */
+span.chip.lost::before {
+  content: "💀";
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 0.85rem;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+section.word {
   display: flex;
   justify-content: center;
-  margin: 20px;
-  color: #F9F4DA;
-  gap:2px;
+  gap: 2px;
+  margin-bottom: 20px;
 }
 
-section.word > span{
+section.word > span {
   height: 40px;
   width: 40px;
   background-color: #323232;
@@ -97,16 +106,16 @@ section.word > span{
   border-bottom: 1px solid #F9F4DA;
 }
 
-section.keyboard{
-  padding: 4px;
+section.keyboard {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
   max-width: 450px;
+  margin-bottom: 36px;
 }
 
-section.keyboard > button{
+section.keyboard > button {
   height: 35px;
   width: 35px;
   background-color: #FCBA29;
@@ -115,7 +124,16 @@ section.keyboard > button{
   cursor: pointer;
 }
 
-button.new-Game{
+section.keyboard > button.correct {
+  background-color: #10A95B;
+}
+
+section.keyboard > button.wrong {
+  background-color: #EC5D49;
+}
+
+
+button.new-game {
   background-color: #11B5E5;
   border: 1px solid #D7D7D7;
   border-radius: 4px;
@@ -125,13 +143,4 @@ button.new-Game{
   display: block;
   margin-inline: auto;
   cursor: pointer;
-  margin-top: 25px;
-}
-
-section.keyboard > button.correct{
-  background-color: #10A95B;
-}
-
-section.keyboard > button.wrong{
-  background-color: #ee0000;
 }

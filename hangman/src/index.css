@@ -41,7 +41,7 @@ section.game-status {
 }
 
 section.game-status.lost {
-  background-color: #ee0000;
+  background-color: #BA2A2A;
 
 }
 section.game-status.won{

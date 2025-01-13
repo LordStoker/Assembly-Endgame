@@ -42,7 +42,7 @@ export default function App() {
 
 
 
-//AÑADIR LETRAS SI NO SE REPITEN Y RESTA 1 VIDA POR INTENTO FALLIDO
+//AÑADIR LETRAS SI NO SE REPITEN
   function addGuessedLetter(letter) {
     if(!isGameOver){
     setGuessedLetters(prevGuessedLetters =>

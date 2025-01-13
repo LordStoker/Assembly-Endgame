@@ -6,14 +6,16 @@ import Confetti from 'react-confetti';
 export default function App() {
 
   //STATE VARIABLES
-  const[currentWord, setCurrentWord] = useState('recuperacion'.toUpperCase());
+  const[currentWord, setCurrentWord] = useState('react'.toUpperCase());
   const[guessedLetters, setGuessedLetters] = useState([]);
   // const[wrongAttempts, setWrongAttempts] = useState(0);
   //DERIVED VARIABLES
   const wrongAttempts = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
-  const rightAttempts = guessedLetters.filter(letter => currentWord.includes(letter)).length;
+  //const rightAttempts = guessedLetters.filter(letter => currentWord.includes(letter)).length;
   const isGameWon = currentWord.split('').every(letter => guessedLetters.includes(letter));
-  const isGameLost = wrongAttempts >= languages.length -1 || rightAttempts === currentWord.length;
+  const isGameLost = wrongAttempts >= languages.length -1;
+  const isGameOver = isGameWon || isGameLost;
+  const gameStatusClass = clsx('game-status', isGameWon && 'won', isGameLost && 'lost');
 
   //ALFABETO
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -37,6 +39,7 @@ export default function App() {
         </button>
       )
   });
+
 
 
 //AÑADIR LETRAS SI NO SE REPITEN Y RESTA 1 VIDA POR INTENTO FALLIDO
@@ -80,21 +83,28 @@ export default function App() {
         <h1>Assembly: Endgame</h1>
         <p>Guess the word within 8 attempts to keep the programming world safe from Assembly!</p>
       </header>
-      {
-        isGameWon &&
-        <section className='game-status'>
+      <section className={gameStatusClass}>
+      {isGameOver ? (
+        isGameWon ? (
+        <>
           <Confetti/>
           <h2>You win!</h2>
           <p>Well done 🎉</p>
+        </>
+        )
+        : (
+        <>
+          <h2>Game over</h2>
+          <p>You lose! Better start learning Assembly 😭</p>
+        </>
+        )
+      )
+      : ( 
+        null
+        )
+      }
         </section>
-        }
-      {
-          isGameLost &&
-          <section className='youLose'>
-            <h2>Game over</h2>
-            <p>You lose! Better start learning Assembly 😭</p>
-          </section>
-        }
+
       <section className='language-chips'>
         {languagesChips}
       </section>
@@ -104,7 +114,7 @@ export default function App() {
       <section className='keyboard'>
         {keyboard}
       </section>
-      {isGameWon && <button className='new-game'>New Game</button>}
+      {isGameOver && <button className='new-game'>New Game</button>}
 
 
       {/* <section className='youLose'>

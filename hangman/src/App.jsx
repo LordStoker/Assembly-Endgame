@@ -44,9 +44,11 @@ export default function App() {
 
 //AÑADIR LETRAS SI NO SE REPITEN Y RESTA 1 VIDA POR INTENTO FALLIDO
   function addGuessedLetter(letter) {
+    if(!isGameOver){
     setGuessedLetters(prevGuessedLetters =>
       prevGuessedLetters.includes(letter) ? prevGuessedLetters :
       [...prevGuessedLetters, letter]);
+    }
     // if(!currentWord.includes(letter)) {
     //   setWrongAttempts(prevWrongAttempts => prevWrongAttempts + 1);
     // }
@@ -54,9 +56,11 @@ export default function App() {
 
   //PALABRA A ADIVINAR
   const wordLetters = currentWord.split('').map((letter, index) => {
+    
     const isGuessed = guessedLetters.includes(letter);
     const isCorrect = isGuessed && currentWord.includes(letter);
-    return(      
+    return(   
+         
       <span className='letter' key={index}>
         {isCorrect ? letter.toUpperCase() : ''}
       </span>
@@ -65,6 +69,7 @@ export default function App() {
 );
   //CHIPS DE LENGUAJES (VIDAS)
   const languagesChips = languages.map((language, index) => {
+
     const className = clsx('chip', index < wrongAttempts && 'lost'); 
     return(
       <span 

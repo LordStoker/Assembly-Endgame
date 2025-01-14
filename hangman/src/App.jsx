@@ -2,6 +2,7 @@ import {useState} from 'react'
 import {languages} from './languages.js'
 import {clsx} from 'clsx';
 import Confetti from 'react-confetti';
+import {getFarewellText} from './utils.js';
 
 export default function App() {
 
@@ -15,11 +16,18 @@ export default function App() {
   const isGameWon = currentWord.split('').every(letter => guessedLetters.includes(letter));
   const isGameLost = wrongAttempts >= languages.length -1;
   const isGameOver = isGameWon || isGameLost;
-  const gameStatusClass = clsx('game-status', isGameWon && 'won', isGameLost && 'lost');
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
+  const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
+  const gameStatusClass = clsx('game-status',{
+    won : isGameWon,
+    lost :  isGameLost,
+    farewell : !isGameOver && isLastGuessIncorrect
+  });
+
 
   function renderGameStatus(){
-    if(!isGameOver){
-      return null;
+    if(!isGameOver && isLastGuessIncorrect){
+      return <p className='farewell-message'>{getFarewellText(languages[wrongAttempts-1].name)}</p>;
     }
     if(isGameWon){
       return(
@@ -30,12 +38,14 @@ export default function App() {
         </>
       )
     }
-    return(
-      <>
-        <h2>Game over</h2>
-        <p>You lose! Better start learning Assembly 😭</p>
-      </>
-    )
+    if(isGameLost){
+      return(
+        <>
+          <h2>Game over</h2>
+          <p>You lose! Better start learning Assembly 😭</p>
+        </>
+      )
+    }
 
   }
 
@@ -56,7 +66,9 @@ export default function App() {
         <button 
         // style={{backgroundColor: isCorrect ? 'green' : isWrong ? 'red' : '#FCBA29'}}
         className={className}
-        onClick={() => addGuessedLetter(letter)} key={letter}>
+        onClick={() => addGuessedLetter(letter)} key={letter}
+        disabled={isGameOver}>
+          
           {letter}
         </button>
       )
@@ -66,11 +78,11 @@ export default function App() {
 
 //AÑADIR LETRAS SI NO SE REPITEN
   function addGuessedLetter(letter) {
-    if(!isGameOver){
+    
     setGuessedLetters(prevGuessedLetters =>
       prevGuessedLetters.includes(letter) ? prevGuessedLetters :
       [...prevGuessedLetters, letter]);
-    }
+    
     // if(!currentWord.includes(letter)) {
     //   setWrongAttempts(prevWrongAttempts => prevWrongAttempts + 1);
     // }

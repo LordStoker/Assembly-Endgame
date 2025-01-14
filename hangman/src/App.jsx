@@ -17,6 +17,28 @@ export default function App() {
   const isGameOver = isGameWon || isGameLost;
   const gameStatusClass = clsx('game-status', isGameWon && 'won', isGameLost && 'lost');
 
+  function renderGameStatus(){
+    if(!isGameOver){
+      return null;
+    }
+    if(isGameWon){
+      return(
+        <>
+          <Confetti/>
+          <h2>You win!</h2>
+          <p>Well done 🎉</p>
+        </>
+      )
+    }
+    return(
+      <>
+        <h2>Game over</h2>
+        <p>You lose! Better start learning Assembly 😭</p>
+      </>
+    )
+
+  }
+
   //ALFABETO
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const keyboard = alphabet.split('').map(letter => {
@@ -89,25 +111,7 @@ export default function App() {
         <p>Guess the word within 8 attempts to keep the programming world safe from Assembly!</p>
       </header>
       <section className={gameStatusClass}>
-      {isGameOver ? (
-        isGameWon ? (
-        <>
-          <Confetti/>
-          <h2>You win!</h2>
-          <p>Well done 🎉</p>
-        </>
-        )
-        : (
-        <>
-          <h2>Game over</h2>
-          <p>You lose! Better start learning Assembly 😭</p>
-        </>
-        )
-      )
-      : ( 
-        null
-        )
-      }
+      {renderGameStatus()}
         </section>
 
       <section className='language-chips'>
